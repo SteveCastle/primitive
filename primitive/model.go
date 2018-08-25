@@ -87,8 +87,9 @@ func (model *Model) SVG() string {
 	bg := model.Background
 	var lines []string
 	lines = append(lines, fmt.Sprintf("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"%d\" height=\"%d\">", model.Sw, model.Sh))
+	lines = append(lines, fmt.Sprintf("<defs><filter id=\"f1\" x=\"0\" y=\"0\"><feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%d\" /></filter></defs>", 10))
 	lines = append(lines, fmt.Sprintf("<rect x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" fill=\"#%02x%02x%02x\" />", model.Sw, model.Sh, bg.R, bg.G, bg.B))
-	lines = append(lines, fmt.Sprintf("<g transform=\"scale(%f) translate(0.5 0.5)\">", model.Scale))
+	lines = append(lines, fmt.Sprintf("<g transform=\"scale(%f) translate(0.5 0.5)\" filter=\"url(#f1)\">", model.Scale))
 	for i, shape := range model.Shapes {
 		c := model.Colors[i]
 		attrs := "fill=\"#%02x%02x%02x\" fill-opacity=\"%f\""
